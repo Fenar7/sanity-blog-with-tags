@@ -1,6 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import Header from "../components/Header";
 import { Post } from "../utils/interface";
+import PostComponent from "../components/PostComponent";
 
 const getPosts = async () => {
   const query = `
@@ -9,7 +10,12 @@ const getPosts = async () => {
       slug,
       publishedAt,
       excerpt,
-      _id // Make sure you're fetching _id, as you're using it as a key
+      _id,
+      tags[] -> {
+        _id,
+        slug,
+        name
+      }
     }
   `;
   const data = await client.fetch(query);
@@ -18,14 +24,15 @@ const getPosts = async () => {
 
 export default async function Home() {
   const posts: Post[] = await getPosts();
-  console.log(posts);
+  console.log(JSON.stringify(posts, null, 2));
+
   return (
     <div>
       <Header title="Articles" />
       <div>
         {posts.length > 0 &&
           posts.map((post) => (
-            <p key={post._id}>{post.title}</p>
+            <PostComponent key={post?._id} post={post}/>
           ))} {/* Corrected this part */}
       </div>
     </div>
