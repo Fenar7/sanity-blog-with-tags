@@ -3,14 +3,14 @@ export interface Post {
     slug: { current: string };
     publishedAt: string;
     excerpt: string;
-    body: any;
+    body: any; // You should replace 'any' with a more specific type if possible
     tags: Array<Tag>;
     _id: string;
 }
 
-export interface Tag [
+export interface Tag {
     name: string;
-    slug: {current: string };
+    slug: { current: string };
     _id: string;
-    postCount?: number
-]
+    postCount?: number; // Optional property indicated by the question mark
+}
