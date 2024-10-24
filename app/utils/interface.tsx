@@ -4,7 +4,7 @@ export interface Post {
     publishedAt: string;
     excerpt: string;
     body: any;
-    tags; Array<Tag>;
+    tags: Array<Tag>;
     _id: string;
 }
 
