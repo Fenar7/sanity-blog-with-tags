@@ -22,6 +22,8 @@ const getPosts = async () => {
   return data;
 };
 
+export const revalidate = 60
+
 export default async function Home() {
   const posts: Post[] = await getPosts();
   console.log(JSON.stringify(posts, null, 2));
