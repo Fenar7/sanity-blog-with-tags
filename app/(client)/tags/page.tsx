@@ -10,14 +10,15 @@ async function getAllTags() {
         name,
         slug,
         _id,
-        "postCount": count(*[_type == "post" && references("tags",^._id)])
+        "postCount": count(*[_type == "post" && references(^._id)])
     }
   `;
   const tags = await client.fetch(query); // Await the client.fetch
   return tags;
 }
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic'; // Force dynamic rendering
+export const revalidate = 60; // Still use ISR to revalidate every 60 seconds
 
 const Page = async () => {
   const tags: Tag[] = await getAllTags(); // Fix type to Tag[]
